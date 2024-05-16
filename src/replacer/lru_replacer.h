@@ -11,7 +11,7 @@ See the Mulan PSL v2 for more details. */
 #pragma once
 
 #include <list>
-#include <mutex>  
+#include <mutex>
 #include <vector>
 
 #include "common/config.h"
@@ -29,19 +29,23 @@ class LRUReplacer : public Replacer {
      */
     explicit LRUReplacer(size_t num_pages);
 
-    ~LRUReplacer();
+    ~LRUReplacer() override;
 
-    bool victim(frame_id_t *frame_id);
+    bool victim(frame_id_t *frame_id) override;
 
-    void pin(frame_id_t frame_id);
+    void pin(frame_id_t frame_id) override;
 
-    void unpin(frame_id_t frame_id);
+    void unpin(frame_id_t frame_id) override;
 
-    size_t Size();
+    size_t Size() override;
 
    private:
-    std::mutex latch_;                  // 互斥锁
-    std::list<frame_id_t> LRUlist_;     // 按加入的时间顺序存放unpinned pages的frame id，首部表示最近被访问
-    std::unordered_map<frame_id_t, std::list<frame_id_t>::iterator> LRUhash_;   // frame_id_t -> unpinned pages的frame id
-    size_t max_size_;   // 最大容量（与缓冲池的容量相同）
+    std::mutex latch_;               // 互斥锁
+
+    // 按加入的时间顺序存放unpinned pages的frame id，首部表示最近被访问
+    std::list<frame_id_t> LRUlist_;
+
+    // frame_id -> unpinned pages的frame id
+    std::unordered_map<frame_id_t, std::list<frame_id_t>::iterator> LRUhash_;
+    size_t max_size_;  // 最大容量（与缓冲池的容量相同）
 };

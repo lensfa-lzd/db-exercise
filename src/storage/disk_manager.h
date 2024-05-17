@@ -32,9 +32,9 @@ class DiskManager {
 
     ~DiskManager() = default;
 
-    static void write_page(int fd, page_id_t page_no, const char *offset, int num_bytes);
+    void write_page(int fd, page_id_t page_no, const char *offset, int num_bytes);
 
-    static void read_page(int fd, page_id_t page_no, char *offset, int num_bytes);
+    void read_page(int fd, page_id_t page_no, char *offset, int num_bytes);
 
     page_id_t allocate_page(int fd);
 

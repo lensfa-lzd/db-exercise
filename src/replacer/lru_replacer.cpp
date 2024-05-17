@@ -72,7 +72,7 @@ void LRUReplacer::unpin(frame_id_t frame_id) {
     // 查找 frame_id 是否已经存在与缓冲区之中
     if (!LRUhash_.count(frame_id)) {
         // 将该 frame_id 插入到 LRUlist_ 的首部
-        LRUlist_.push_front(frame_id);
+        LRUlist_.emplace_front(frame_id);
         // LRUlist_.end() 实际为队尾再后面的一个元素
         LRUhash_[frame_id] = LRUlist_.begin();
     }

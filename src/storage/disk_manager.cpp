@@ -68,7 +68,7 @@ void DiskManager::read_page(int fd, page_id_t page_no, char *offset, int num_byt
         throw InternalError("DiskManager::read_page Error: lseek failed");
     }
 
-    // 使用write()写入数据
+    // 使用read()读取数据
     ssize_t bytes_read = read(fd, offset, num_bytes);
 
     // 检查是否所有数据都被写入
